@@ -107,7 +107,7 @@ function generateHintsDOM() {
       );
     });
 
-    toggleHintsBlockVisibility.call(this, 'block');
+    toggleHintsBlockVisibility.call(hints_block, 'block');
     changeCurrentHintWithBtn = changeStateOfHintsList();
   };
 }
