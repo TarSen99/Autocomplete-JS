@@ -8,7 +8,7 @@ const checkWhichBtnPressed = checkBtn();
 
 input.addEventListener("focus", showHintsWrapper);
 input.addEventListener("input", showHintsWrapper);
-input.addEventListener("blur", toggleHintsBlockVisibility.bind(null, "none"));
+input.addEventListener("blur", toggleHintsBlockVisibility.bind(hints_block, "none"));
 input.addEventListener("keydown", checkWhichBtnPressed);
 
 function checkBtn() {
@@ -92,7 +92,7 @@ function generateHintsDOM() {
   let getHintsArr = getHintsArray();
 
   return function(param) {
-    let valueTiFind = param || this.target.value;
+    let valueTiFind = param;
     let hintsArr = getHintsArr(valueTiFind);
     hints_block.innerHTML = "";
 
@@ -107,15 +107,15 @@ function generateHintsDOM() {
       );
     });
 
-    toggleHintsBlockVisibility.call("block");
+    toggleHintsBlockVisibility.call(this, 'block');
     changeCurrentHintWithBtn = changeStateOfHintsList();
   };
 }
 
 function toggleHintsBlockVisibility(param) {
-  let currentBlockState = param || this;
+  let currentBlockState = param ;
 
-  hints_block.style.display = currentBlockState;
+  this.style.display = currentBlockState;
 }
 
 function showHints(generateHints, delay) {
@@ -126,7 +126,7 @@ function showHints(generateHints, delay) {
       clearTimeout(currentTimedId);
     }
 
-    currentTimedId = setTimeout(generateHints.bind(event), delay);
+    currentTimedId = setTimeout(generateHints.bind(hints_block, event.target.value), delay);
   };
 }
 
