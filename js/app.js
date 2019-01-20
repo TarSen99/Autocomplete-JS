@@ -28,8 +28,6 @@ function checkBtn() {
 let changeCurrentHintWithBtn;
 
 function getHintItemByKey(key, currItem) {
-  let saveItemState = currItem;
-
   if (!currItem) {
     return;
   }
