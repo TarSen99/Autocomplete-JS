@@ -10,6 +10,11 @@ input.addEventListener("focus", showHintsWrapper);
 input.addEventListener("input", showHintsWrapper);
 input.addEventListener("blur", toggleHintsBlockVisibility.bind(hints_block, "none"));
 input.addEventListener("keydown", checkWhichBtnPressed);
+document.addEventListener("keydown", addInputFocus);
+
+function addInputFocus() {
+  input.focus();
+}
 
 function checkBtn() {
   let keycodes = [37, 38, 39, 40, 13];
@@ -19,7 +24,7 @@ function checkBtn() {
       if (e.keyCode === key) {
         e.preventDefault();
         changeCurrentHintWithBtn(key);
-        break;
+        return;
       }
     }
   };
@@ -235,7 +240,6 @@ function removeItemFromList() {
   //if we deleted last element in list
   if (positionToRemove === restButtons.length) {
     let lastListItem = selectedItemsUl.lastElementChild;
-    let startX = selectedItemsUl.getBoundingClientRect().left;
     let lastListItemX = lastListItem.getBoundingClientRect().left;
     let lastListItemW = lastListItem.clientWidth;
     let distBetweenItems = removedItemPosX - lastListItemX - lastListItemW;
@@ -259,7 +263,7 @@ function removeItemFromList() {
   });
 }
 
-function addItemsToList(item) {
+function addItemsToList() {
   let activeListItems = document.querySelector(".input-field-selected-items");
 
   return function(item) {
@@ -281,8 +285,10 @@ function addItemsToList(item) {
 
     let lastItemParams = applyPositionToActiveListItem(activeListItems);
     //true - confirm to delete last element that doesn't feet
-    configureListItems(lastItemParams, currNumberListElements + 1, true);
+    configureListItems(lastItemParams,
+        currNumberListElements + 1, true);
   };
+
 }
 
 function setInputSettings() {
